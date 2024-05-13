@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.view.WindowCompat
 import com.ssajudn.portalunpab.navigation.AppNavigation
 import com.ssajudn.portalunpab.ui.components.StatusBarColor
 import com.ssajudn.portalunpab.ui.theme.PortalUNPABTheme

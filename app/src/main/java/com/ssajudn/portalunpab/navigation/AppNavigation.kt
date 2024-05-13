@@ -1,39 +1,95 @@
 package com.ssajudn.portalunpab.navigation
 
+//import com.ssajudn.portalunpab.navigation.nav_graph.login
+import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ssajudn.portalunpab.navigation.nav_graph.home
-//import com.ssajudn.portalunpab.navigation.nav_graph.login
+import com.ssajudn.portalunpab.navigation.nav_graph.payment
 import com.ssajudn.portalunpab.navigation.nav_graph.user
+import com.ssajudn.portalunpab.presentation.components.TopAppBarHome
+import com.ssajudn.portalunpab.ui.components.StatusBarColor
+import com.ssajudn.portalunpab.ui.theme.DarkBlue
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val showDialog: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
 
     val isBottomAppBarVisible = rememberSaveable(navBackStackEntry) {
         navBackStackEntry?.destination?.route == Screen.HomeScreen.route ||
+                navBackStackEntry?.destination?.route == Screen.PaymentScreen.route ||
                 navBackStackEntry?.destination?.route == Screen.UserScreen.route
+    }
+    StatusBarColor(color = DarkBlue)
+
+    if (showDialog.value) {
+        AlertDialog(
+            title = {
+                Text(text = "Ter Klik")
+            },
+            text = {
+                Text(text = "lorem lorem an")
+            },
+            onDismissRequest = { },
+            confirmButton = {
+
+            },
+            dismissButton = {
+                Button(onClick = { showDialog.value = false }) {
+                    Text(text = "Tutup")
+                }
+            }
+        )
     }
 
     Scaffold(
+        topBar = {
+            if (navController.currentBackStackEntry?.destination?.route == "home") {
+                TopAppBarHome(showDialog = showDialog)
+            }
+        },
         bottomBar = {
             if (isBottomAppBarVisible) {
                 BottomNavBar(navController = navController)
@@ -47,15 +103,28 @@ fun AppNavigation() {
             navController = navController,
             startDestination = Tab.Home.route
         ) {
+            Log.d(
+                "Screen",
+                "AppNavigation: ${navController.currentBackStackEntry?.destination?.route}"
+            )
             home(navController = navController)
+            payment(navController = navController)
             user(navController = navController)
         }
     }
 }
 
+@Preview
+@Composable
+private fun AppPreview() {
+    AppNavigation()
+}
+
 @Composable
 private fun BottomNavBar(navController: NavController) {
-    NavigationBar {
+    NavigationBar(
+        containerColor = DarkBlue,
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -76,12 +145,21 @@ private fun BottomNavBar(navController: NavController) {
                 icon = {
                     Icon(
                         imageVector = if (selected) tab.selectedIcon else tab.icon,
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = if (selected) Color.Black else Color.White
                     )
                 },
                 label = {
-                    Text(text = tab.label, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                }
+                    Text(
+                        text = tab.label,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.White
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.White
+                )
             )
         }
     }
