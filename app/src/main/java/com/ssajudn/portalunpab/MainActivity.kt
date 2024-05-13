@@ -3,27 +3,28 @@ package com.ssajudn.portalunpab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.ssajudn.portalunpab.navigation.AppNavigator
-import com.ssajudn.portalunpab.presentation.LoginScreen
-import com.ssajudn.portalunpab.ui.StatusBarColor
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
+import com.ssajudn.portalunpab.navigation.AppNavigation
+import com.ssajudn.portalunpab.ui.components.StatusBarColor
 import com.ssajudn.portalunpab.ui.theme.PortalUNPABTheme
 import com.ssajudn.portalunpab.ui.theme.Primary
 
 class MainActivity : ComponentActivity() {
-
-    lateinit var navController: NavHostController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PortalUNPABTheme {
                 StatusBarColor(color = Primary)
-                navController = rememberNavController()
-                AppNavigator(navController = navController)
+                AppNavigation()
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AppPreview() {
+    AppNavigation()
 }

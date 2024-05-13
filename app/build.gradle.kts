@@ -91,4 +91,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+
+    implementation(libs.androidx.material.icons.extended)
 }

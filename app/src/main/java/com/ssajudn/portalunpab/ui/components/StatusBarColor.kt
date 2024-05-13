@@ -1,4 +1,4 @@
-package com.ssajudn.portalunpab.ui
+package com.ssajudn.portalunpab.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
