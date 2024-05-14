@@ -15,6 +15,14 @@ sealed class Screen(val route: String) {
     //    data object LoginScreen : Screen("login")
     data object UserScreen : Screen("user")
     data object PaymentScreen : Screen("payment")
+    data object MenuScreen : Screen("menu")
+    data object RencanaStudiScreen : Screen("rencana_studi")
+    data object PesertaKelasScreen : Screen("peserta_kelas")
+    data object KartuUjianScreen : Screen("kartu_ujian")
+    data object HasilStudiScreen : Screen("hasil_studi")
+    data object BimbinganAKScreen : Screen("bimbingan_ak")
+    data object MateriOnlineScreen : Screen("materi_online")
+    data object QuizScreen : Screen("quiz")
 }
 
 sealed class Tab(
