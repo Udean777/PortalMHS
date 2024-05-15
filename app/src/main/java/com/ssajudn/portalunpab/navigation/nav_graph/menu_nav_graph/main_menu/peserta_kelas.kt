@@ -11,7 +11,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.main_menu.PesertaKelas
 fun NavGraphBuilder.peserta_kelas(navController: NavController){
     navigation(
         startDestination = Screen.PesertaKelasScreen.route,
-        route = "peserta_kelas"
+        route = "peserta_kelas_graph"
     ) {
         composable(route = Screen.PesertaKelasScreen.route) {
             PesertaKelas(navController = navController)

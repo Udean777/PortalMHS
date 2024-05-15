@@ -1,4 +1,4 @@
-package com.ssajudn.portalunpab.presentation.components
+package com.ssajudn.portalunpab.ui.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

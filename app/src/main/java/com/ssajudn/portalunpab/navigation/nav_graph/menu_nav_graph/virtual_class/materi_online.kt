@@ -10,7 +10,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.virtual_class.MateriOnli
 fun NavGraphBuilder.materi_online(navController: NavController) {
     navigation(
         startDestination = Screen.MateriOnlineScreen.route,
-        route = "materi_online"
+        route = "materi_online_graph"
     ) {
         composable(
             route = Screen.MateriOnlineScreen.route

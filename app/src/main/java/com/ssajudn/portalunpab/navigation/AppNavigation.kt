@@ -1,16 +1,22 @@
 package com.ssajudn.portalunpab.navigation
 
 //import com.ssajudn.portalunpab.navigation.nav_graph.login
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,12 +30,20 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ssajudn.portalunpab.navigation.nav_graph.home
 import com.ssajudn.portalunpab.navigation.nav_graph.menu
+import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.main_menu.hasil_studi
+import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.main_menu.kartu_ujian
+import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.main_menu.peserta_kelas
 import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.main_menu.rencana_studi
+import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.virtual_class.bimbingan_ak
+import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.virtual_class.materi_online
+import com.ssajudn.portalunpab.navigation.nav_graph.menu_nav_graph.virtual_class.quiz
 import com.ssajudn.portalunpab.navigation.nav_graph.payment
 import com.ssajudn.portalunpab.navigation.nav_graph.user
-import com.ssajudn.portalunpab.presentation.components.TopAppBarHome
 import com.ssajudn.portalunpab.ui.components.StatusBarColor
+import com.ssajudn.portalunpab.ui.components.TopAppBarMain
+import com.ssajudn.portalunpab.ui.components.TopAppBarMenu
 import com.ssajudn.portalunpab.ui.theme.DarkBlue
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppNavigation() {
@@ -43,30 +57,57 @@ fun AppNavigation() {
     }
     StatusBarColor(color = DarkBlue)
 
-    Scaffold(
-        topBar = {
-            if (navController.currentBackStackEntry?.destination?.route == "home") {
-                TopAppBarHome(navController = navController)
-            }
-        },
-        bottomBar = {
-            if (isBottomAppBarVisible) {
-                BottomNavBar(navController = navController)
-            }
-        }
-    ) { contentPadding ->
-        NavHost(
-            modifier = Modifier
-                .padding(contentPadding)
-                .fillMaxSize(),
-            navController = navController,
-            startDestination = Tab.Home.route
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coroutineScope = rememberCoroutineScope()
+
+    ModalNavigationDrawer(drawerContent = {
+        ModalDrawerSheet(
+            modifier = Modifier.background(Color.Black)
         ) {
-            home(navController = navController)
-            payment(navController = navController)
-            user(navController = navController)
-            menu(navController = navController)
-            rencana_studi(navController = navController)
+            DrawerContent(navController = navController, closeDrawer = {
+                coroutineScope.launch { drawerState.close() }
+            })
+        }
+    }, drawerState = drawerState) {
+        Scaffold(
+            topBar = {
+               if (isBottomAppBarVisible) {
+                   TopAppBarMain(
+                       navController = navController,
+                       openDrawer = { coroutineScope.launch { drawerState.open() } }
+                   )
+               }else{
+                   TopAppBarMenu(
+                       navController = navController,
+                       openDrawer = { coroutineScope.launch { drawerState.open() } }
+                   )
+               }
+            },
+            bottomBar = {
+                if (isBottomAppBarVisible) {
+                    BottomNavBar(navController = navController)
+                }
+            }
+        ) { contentPadding ->
+            NavHost(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .fillMaxSize(),
+                navController = navController,
+                startDestination = Tab.Home.route
+            ) {
+                home(navController = navController)
+                payment(navController = navController)
+                user(navController = navController)
+                menu(navController = navController)
+                rencana_studi(navController = navController)
+                hasil_studi(navController = navController)
+                kartu_ujian(navController = navController)
+                peserta_kelas(navController = navController)
+                bimbingan_ak(navController = navController)
+                materi_online(navController = navController)
+                quiz(navController = navController)
+            }
         }
     }
 }

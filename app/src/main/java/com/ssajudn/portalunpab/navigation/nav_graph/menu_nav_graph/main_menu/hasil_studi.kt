@@ -11,7 +11,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.main_menu.KartuUjian
 fun NavGraphBuilder.hasil_studi(navController: NavController){
     navigation(
         startDestination = Screen.HasilStudiScreen.route,
-        route = "hasil_studi"
+        route = "hasil_studi_graph"
     ) {
         composable(route = Screen.HasilStudiScreen.route) {
             HasilStudi(navController = navController)

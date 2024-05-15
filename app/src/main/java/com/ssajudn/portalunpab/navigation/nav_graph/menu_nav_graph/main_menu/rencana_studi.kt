@@ -12,7 +12,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.main_menu.RencanaStudiSc
 fun NavGraphBuilder.rencana_studi(navController: NavController){
     navigation(
         startDestination = Screen.RencanaStudiScreen.route,
-        route = "rencana_studi"
+        route = "rencana_studi_graph"
     ) {
         composable(route = Screen.RencanaStudiScreen.route) {
             RencanaStudiScreen(navController = navController)

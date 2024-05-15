@@ -9,6 +9,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Payments
 import androidx.compose.ui.graphics.vector.ImageVector
 
+// Screen
 sealed class Screen(val route: String) {
     data object HomeScreen : Screen("home")
 
@@ -25,6 +26,7 @@ sealed class Screen(val route: String) {
     data object QuizScreen : Screen("quiz")
 }
 
+// Bottom tabs
 sealed class Tab(
     val route: String,
     val icon: ImageVector,

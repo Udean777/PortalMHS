@@ -10,7 +10,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.virtual_class.BimbinganA
 fun NavGraphBuilder.bimbingan_ak(navController: NavController){
     navigation(
         startDestination = Screen.BimbinganAKScreen.route,
-        route = "bimbingan_ak"
+        route = "bimbingan_ak_graph"
     ){
         composable(route = Screen.BimbinganAKScreen.route){
             BimbinganAK(navController = navController)

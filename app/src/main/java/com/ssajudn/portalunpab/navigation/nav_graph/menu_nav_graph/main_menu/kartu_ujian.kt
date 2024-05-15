@@ -11,7 +11,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.main_menu.RencanaStudiSc
 fun NavGraphBuilder.kartu_ujian(navController: NavController){
     navigation(
         startDestination = Screen.KartuUjianScreen.route,
-        route = "kartu_ujian"
+        route = "kartu_ujian_graph"
     ) {
         composable(route = Screen.KartuUjianScreen.route) {
             KartuUjian(navController = navController)

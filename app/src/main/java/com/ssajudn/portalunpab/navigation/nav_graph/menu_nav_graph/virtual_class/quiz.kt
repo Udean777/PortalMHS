@@ -10,7 +10,7 @@ import com.ssajudn.portalunpab.presentation.menu_screen.virtual_class.Quiz
 fun NavGraphBuilder.quiz(navController: NavController) {
     navigation(
         startDestination = Screen.QuizScreen.route,
-        route = "quiz"
+        route = "quiz_graph"
     ) {
         composable(route = Screen.QuizScreen.route) {
             Quiz(navController = navController)
